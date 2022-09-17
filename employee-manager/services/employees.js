@@ -39,7 +39,7 @@ export const editEmployee = createAsyncThunk(
   "employee/edit",
   async (payload, { rejectWithValue }) => {
     try {
-      const { id, data } = payload;
+      const { id, data, callback } = payload;
       const response = await fetch(`${BASE_URL}/employee/${id}`, {
         method: "PUT",
         headers: {
@@ -48,6 +48,7 @@ export const editEmployee = createAsyncThunk(
         body: JSON.stringify(data),
       });
       const result = await response.json();
+      callback();
       return { id, data: result };
     } catch (error) {
       return rejectWithValue(error);
@@ -59,12 +60,15 @@ export const deleteEmployee = createAsyncThunk(
   "employee/delete",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}/employee/${payload}`, {
+      const { userId, callback } = payload;
+      const response = await fetch(`${BASE_URL}/employee/${payload.userId}`, {
         method: "DELETE",
       });
       const result = await response.json();
+      callback();
       return result._id;
     } catch (error) {
+      console.log("🚀 ~ file: Employees.js ~ line 71 ~ error", error)
       return rejectWithValue(error);
     }
   }

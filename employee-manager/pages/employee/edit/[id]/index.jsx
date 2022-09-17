@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
+import { Button, CircularProgress, IconButton } from "@mui/material";
 import { useRouter } from "next/router";
 import Form from "../../../../components/ui/Form/Form";
 import { editEmployee, getEmployee } from "../../../../services/employees";
@@ -18,6 +18,8 @@ function EditEmployee() {
     (state) => state.employees.selectedEmployee
   );
 
+  const updateEmployee = useSelector((state) => state.employees.employee);
+
   useEffect(() => {
     if (id) {
       dispatch(getEmployee(id));
@@ -32,17 +34,20 @@ function EditEmployee() {
 
   const handleSubmit = (data) => {
     const { _id, first_name, last_name, email, number, gender, photo } = data;
-    dispatch(editEmployee({
-      id: _id,
-      data: {
-        first_name,
-        last_name,
-        email,
-        number,
-        gender,
-        photo
-      }
-    }));
+    dispatch(
+      editEmployee({
+        id: _id,
+        data: {
+          first_name,
+          last_name,
+          email,
+          number,
+          gender,
+          photo,
+        },
+        callback: () => router.push("/employee/list"),
+      })
+    );
   };
 
   if (loading) {
@@ -50,10 +55,20 @@ function EditEmployee() {
   }
 
   return (
-    <Form handleSubmit={handleSubmit} initialValues={user}>
-      <Button type="submit" variant="outlined">
-        SAVE
-      </Button>
+    <Form
+      handleSubmit={handleSubmit}
+      initialValues={user}
+      disabled={updateEmployee.loading}
+    >
+      {updateEmployee.loading ? (
+        <IconButton>
+          <CircularProgress />
+        </IconButton>
+      ) : (
+        <Button type="submit" variant="outlined">
+          SAVE
+        </Button>
+      )}
     </Form>
   );
 }

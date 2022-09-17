@@ -27,19 +27,15 @@ export class CreateEmployeeDto {
 
   @ApiProperty({
     type: String,
-    required: true,
-    description: 'email is required',
+    required: false,
   })
-  @IsNotEmpty()
   @IsEmail()
   email: string;
 
   @ApiProperty({
     type: String,
-    required: true,
-    description: 'number is required',
+    required: false,
   })
-  @IsNotEmpty()
   @IsString()
   number: string;
 
@@ -52,10 +48,6 @@ export class CreateEmployeeDto {
   @IsEnum(Gender)
   gender: Gender;
 
-  @ApiProperty({
-    type: String,
-    required: false,
-  })
   @ApiProperty({
     type: String,
     required: false,

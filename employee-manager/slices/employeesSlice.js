@@ -52,10 +52,11 @@ export const employeesSlice = createSlice({
       state.list.hasError = true;
     },
     [addEmployee.pending]: (state, { payload }) => {
-      state.employee = { ...initialState.employee };
+      state.employee.loading = true
     },
     [addEmployee.fulfilled]: (state, { payload }) => {
       state.employee.loading = false;
+      state.employee.data = payload;
       state.list.data.push(payload);
     },
     [addEmployee.rejected]: (state, { payload }) => {
@@ -64,7 +65,7 @@ export const employeesSlice = createSlice({
       state.employee.hasError = true;
     },
     [editEmployee.pending]: (state, { payload }) => {
-      state.employee = { ...initialState.employee };
+      state.employee.loading = true;
     },
     [editEmployee.fulfilled]: (state, { payload }) => {
       const { id, data } = payload;
@@ -81,11 +82,11 @@ export const employeesSlice = createSlice({
       state.employee.hasError = true;
     },
     [deleteEmployee.pending]: (state, { payload }) => {
-      state.employee = { ...initialState.employee };
+      state.employee.loading = true;
     },
     [deleteEmployee.fulfilled]: (state, { payload }) => {
       const deleteIndex = state.list.data.findIndex(
-        (item) => item._id === payload._id
+        (item) => item._id === payload
       );
       if (deleteIndex > -1) {
         state.list.data.splice(deleteIndex, 1);

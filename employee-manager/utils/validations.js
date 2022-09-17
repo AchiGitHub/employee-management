@@ -15,7 +15,6 @@ export const validationSchema = yup.object({
     email: yup.string().email("Enter a valid email"),
     number: yup
         .string()
-        .matches(PHONE_REGEX, "Invalid phone number")
-        .required("Phone number is required"),
+        .matches(PHONE_REGEX, "Invalid phone number"),
     gender: yup.string().required("Gender is required"),
 });

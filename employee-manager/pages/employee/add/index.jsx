@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
+import { Button, CircularProgress, IconButton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { addEmployee } from "../../../services/employees";
 import { resetState } from "../../../slices/employeesSlice";
 import Form from "../../../components/ui/Form/Form";
@@ -24,18 +23,6 @@ function AddEmployeeComponent() {
   };
 
   useEffect(() => {
-    console.log("🚀 ~ file: index.jsx ~ line 28 ~ useEffect ~ data", data)
-    if (data === null && hasError === true) {
-      toast("🦄 Wow so easy!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    }
-
     return () => {
       dispatch(resetState());
     };
@@ -43,9 +30,15 @@ function AddEmployeeComponent() {
 
   return (
     <Form handleSubmit={handleSubmit} initialValues={{}} disabled={loading}>
-      <Button type="submit" variant="outlined">
-        ADD
-      </Button>
+      {loading ? (
+        <IconButton>
+          <CircularProgress />
+        </IconButton>
+      ) : (
+        <Button type="submit" variant="outlined">
+          ADD
+        </Button>
+      )}
     </Form>
   );
 }
