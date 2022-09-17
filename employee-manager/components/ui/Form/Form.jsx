@@ -1,0 +1,119 @@
+import { useFormik } from "formik";
+import { Avatar, MenuItem, TextField } from "@mui/material";
+import styles from "./Form.module.css";
+import { Container } from "@mui/system";
+import { validationSchema } from "../../../utils/validations";
+
+function Form({ initialValues, handleSubmit, disabled, children }) {
+  const formik = useFormik({
+    initialValues,
+    validationSchema: validationSchema,
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
+  });
+
+  return (
+    <Container maxWidth="sm">
+      <div className={styles.formContainer}>
+        <form onSubmit={formik.handleSubmit}>
+          <div className={styles.avatar}>
+            <Avatar alt={formik.values.first_name} src={formik.values.photo} sx={{ width: 100, height: 100 }} />
+          </div>
+          <div className={styles.inputRow}>
+            <div className={styles.formLabel}>First Name<span className={styles.mandatory}>*</span></div>
+            <TextField
+              className={styles.formItem}
+              fullWidth
+              hiddenLabel
+              id="first_name"
+              name="first_name"
+              label="First Name"
+              value={formik.values.first_name || ""}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.first_name && Boolean(formik.errors.first_name)
+              }
+              helperText={formik.touched.first_name && formik.errors.first_name}
+              disabled={disabled}
+            />
+          </div>
+          <div className={styles.inputRow}>
+            <div className={styles.formLabel}>Last Name<span className={styles.mandatory}>*</span></div>
+            <TextField
+              className={styles.formItem}
+              fullWidth
+              hiddenLabel
+              id="last_name"
+              name="last_name"
+              label="Last Name"
+              value={formik.values.last_name || ""}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.last_name && Boolean(formik.errors.last_name)
+              }
+              helperText={formik.touched.last_name && formik.errors.last_name}
+              disabled={disabled}
+            />
+          </div>
+          <div className={styles.inputRow}>
+            <div className={styles.formLabel}>Email</div>
+            <TextField
+              className={styles.formItem}
+              fullWidth
+              hiddenLabel
+              id="email"
+              name="email"
+              label="Email"
+              placeholder="Email"
+              value={formik.values.email || ""}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+              disabled={disabled}
+            />
+          </div>
+          <div className={styles.inputRow}>
+            <div className={styles.formLabel}>Phone</div>
+            <TextField
+              className={styles.formItem}
+              fullWidth
+              hiddenLabel={true}
+              id="number"
+              name="number"
+              label="Phone"
+              value={formik.values.number || ""}
+              onChange={formik.handleChange}
+              error={formik.touched.number && Boolean(formik.errors.number)}
+              helperText={formik.touched.number && formik.errors.number}
+              disabled={disabled}
+            />
+          </div>
+          <div className={styles.inputRow}>
+            <div className={styles.formLabel}>Gender</div>
+            <TextField
+              select
+              className={styles.formItem}
+              fullWidth
+              id="gender"
+              name="gender"
+              label="Gender"
+              value={formik.values.gender || ""}
+              onChange={formik.handleChange}
+              error={formik.touched.gender && Boolean(formik.errors.gender)}
+              helperText={formik.touched.gender && formik.errors.gender}
+              disabled={disabled}
+            >
+              <MenuItem value="M">Male</MenuItem>
+              <MenuItem value="F">Female</MenuItem>
+            </TextField>
+          </div>
+          <div className={styles.action}>{children}</div>
+        </form>
+      </div>
+    </Container>
+  );
+}
+
+export default Form;

@@ -1,0 +1,22 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 225px);
+    row-gap: 5px;
+    column-gap: 5px;
+    justify-content: center;
+    list-style: none;
+}
+
+.grid > .card {
+    padding: 5px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actionItem {
+    cursor: pointer;
+}
