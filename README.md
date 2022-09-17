@@ -1,10 +1,11 @@
-# Employee Frontend using NextJS
+# Employee Frontend and Service using NextJS and NestJS
 
 ### Introduction
 The employee-manager consists the frontend.
+The employee-service consists the CRUD REST APIs.
 
 ### Steps: 
-1. Start the employee-service using `docker-compose up`
+1. Start the employee-service using `docker-compose up` inside the directory
 2. Run client app using on the directory `npm run dev`
 
 ### Ports:
