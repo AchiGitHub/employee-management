@@ -16,3 +16,5 @@ Employee service starts on port `http://localhost:4200/`
 MondoDB starts on port `http://localhost:27017`
 
 API Documentation: http://localhost:4200/api
+
+Run `docker-compose down` at the end
