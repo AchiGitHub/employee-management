@@ -1,11 +1,12 @@
 import { Provider } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from '../components/common/Layout'
-import { store } from '../app/store';
 import '../styles/globals.css'
+import { AppProps } from 'next/app';
+import { store } from '../app/store';
 
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <Layout>

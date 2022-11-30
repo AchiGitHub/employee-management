@@ -5,34 +5,28 @@ import { useRouter } from "next/router";
 import Form from "../../../../components/ui/Form/Form";
 import { editEmployee, getEmployee } from "../../../../services/employees";
 import Spinner from "../../../../components/common/Spinner/Spinner";
+import { useAppDispatch, useAppSelector } from "../../../../common/hooks";
+import { Employee } from "../../../../common/types";
 
 function EditEmployee() {
   const router = useRouter();
-  const dispatch = useDispatch();
-
-  const [user, setUser] = useState({});
+  const dispatch = useAppDispatch();
 
   const { id } = router.query;
 
-  const { loading, data, error, hasError } = useSelector(
+  const { loading, data, error, hasError } = useAppSelector(
     (state) => state.employees.selectedEmployee
   );
 
-  const updateEmployee = useSelector((state) => state.employees.employee);
+  const updateEmployee = useAppSelector((state) => state.employees.employee);
 
   useEffect(() => {
     if (id) {
-      dispatch(getEmployee(id));
+      dispatch(getEmployee({ id }));
     }
   }, [id]);
 
-  useEffect(() => {
-    if (data) {
-      setUser(data);
-    }
-  }, [data]);
-
-  const handleSubmit = (data) => {
+  const handleSubmit = (data: Employee) => {
     const { _id, first_name, last_name, email, number, gender, photo } = data;
     dispatch(
       editEmployee({
@@ -45,9 +39,13 @@ function EditEmployee() {
           gender,
           photo,
         },
-        callback: () => router.push("/employee/list"),
+        callback: () => redirectRotue("/employee/list"),
       })
     );
+  };
+
+  const redirectRotue = (route: string) => {
+    router.push(route);
   };
 
   if (loading) {
@@ -57,19 +55,11 @@ function EditEmployee() {
   return (
     <Form
       handleSubmit={handleSubmit}
-      initialValues={user}
+      initialValues={data}
+      redirect={() => redirectRotue("/employee/list")}
+      submitButtonText="SAVE"
       disabled={updateEmployee.loading}
-    >
-      {updateEmployee.loading ? (
-        <IconButton>
-          <CircularProgress />
-        </IconButton>
-      ) : (
-        <Button type="submit" variant="outlined">
-          SAVE
-        </Button>
-      )}
-    </Form>
+    />
   );
 }
 

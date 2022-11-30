@@ -2,7 +2,11 @@ import Navbar from '../Navbar';
 import styles from '../../../styles/Layout.module.css'
 import { Container } from '@mui/material';
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+    children: React.ReactNode
+}
+
+const Layout = ({ children }: LayoutProps) => {
     return (
         <>
             <Navbar />

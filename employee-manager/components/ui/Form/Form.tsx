@@ -1,11 +1,33 @@
 import { useFormik } from "formik";
-import { Avatar, MenuItem, TextField } from "@mui/material";
-import styles from "./Form.module.css";
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  IconButton,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import { Container } from "@mui/system";
-import { validationSchema } from "../../../utils/validations";
+import { validationSchema } from "../../../common/utils/validations";
+import { Employee } from "../../../common/types";
+import styles from "./Form.module.css";
 
-function Form({ initialValues, handleSubmit, disabled, children }) {
-  const formik = useFormik({
+interface FormProps {
+  initialValues?: Employee;
+  disabled: boolean;
+  submitButtonText: string;
+  handleSubmit: (values: Employee) => void;
+  redirect: () => void;
+}
+
+const Form = ({
+  initialValues,
+  submitButtonText,
+  disabled,
+  handleSubmit,
+  redirect,
+}: FormProps) => {
+  const formik = useFormik<Employee>({
     initialValues,
     validationSchema: validationSchema,
     enableReinitialize: true,
@@ -19,10 +41,16 @@ function Form({ initialValues, handleSubmit, disabled, children }) {
       <div className={styles.formContainer}>
         <form onSubmit={formik.handleSubmit}>
           <div className={styles.avatar}>
-            <Avatar alt={formik.values.first_name} src={formik.values.photo} sx={{ width: 100, height: 100 }} />
+            <Avatar
+              alt={formik.values.first_name}
+              src={formik.values.photo}
+              sx={{ width: 100, height: 100 }}
+            />
           </div>
           <div className={styles.inputRow}>
-            <div className={styles.formLabel}>First Name<span className={styles.mandatory}>*</span></div>
+            <div className={styles.formLabel}>
+              First Name<span className={styles.mandatory}>*</span>
+            </div>
             <TextField
               className={styles.formItem}
               fullWidth
@@ -40,7 +68,9 @@ function Form({ initialValues, handleSubmit, disabled, children }) {
             />
           </div>
           <div className={styles.inputRow}>
-            <div className={styles.formLabel}>Last Name<span className={styles.mandatory}>*</span></div>
+            <div className={styles.formLabel}>
+              Last Name<span className={styles.mandatory}>*</span>
+            </div>
             <TextField
               className={styles.formItem}
               fullWidth
@@ -109,11 +139,24 @@ function Form({ initialValues, handleSubmit, disabled, children }) {
               <MenuItem value="F">Female</MenuItem>
             </TextField>
           </div>
-          <div className={styles.action}>{children}</div>
+          <div className={styles.action}>
+            {disabled ? (
+              <IconButton>
+                <CircularProgress />
+              </IconButton>
+            ) : (
+              <>
+                <Button onClick={() => redirect()}>Back</Button>
+                <Button type="submit" variant="outlined">
+                  {submitButtonText}
+                </Button>
+              </>
+            )}
+          </div>
         </form>
       </div>
     </Container>
   );
-}
+};
 
 export default Form;

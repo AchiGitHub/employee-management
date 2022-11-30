@@ -1,24 +1,23 @@
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
+import { Card, CardContent, CardMedia } from "@mui/material";
 import styles from "./Card.module.css";
 
+interface CardProps {
+  photo: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  children?: React.ReactNode;
+}
+
 function CardComponent({
-  id,
   photo,
   firstName,
   lastName,
   email,
   phone,
-  gender,
   children,
-}) {
+}: CardProps) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia

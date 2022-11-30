@@ -1,15 +1,16 @@
 import { useContext } from "react";
 import { EmployeesContext } from "../../../pages/employee/list";
-import { GenderMap } from "../../../utils/constants";
+import { GenderMap } from "../../../common/utils/constants";
 import CardComponent from "../../common/Card/Card";
 import styles from "./Grid.module.css";
 import Operations from "../../common/Operations/Operations";
 
 function Grid({ handleDelete }) {
+
   const employeeData = useContext(EmployeesContext);
 
   if (employeeData.length === 0) {
-    return;
+    return <h2>No records!</h2>;
   }
 
   return (
@@ -17,11 +18,9 @@ function Grid({ handleDelete }) {
       {employeeData.map((item, idx) => (
         <div key={item._id} className={styles.card}>
           <CardComponent
-            id={item._id}
             firstName={item.first_name}
             lastName={item.last_name}
             email={item.email}
-            gender={item.gender}
             phone={item.number}
             photo={item.photo}
           >

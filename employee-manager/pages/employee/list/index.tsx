@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, IconButton, Stack, ToggleButton } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 import { BsFillGridFill } from "react-icons/bs";
 import { RiTableFill } from "react-icons/ri";
 import { HiRefresh } from "react-icons/hi";
@@ -9,22 +8,29 @@ import { HiRefresh } from "react-icons/hi";
 import Grid from "../../../components/ui/Grid";
 import Table from "../../../components/ui/Table";
 import styles from "../../../styles/Layout.module.css";
-import { deleteEmployee, getEmployees } from "../../../services/Employees";
 import ModalComponent from "../../../components/common/Modal/Modal";
 import ErrorBoundary from "../../../components/common/Errors/ErrorBoundary";
+import { useAppDispatch, useAppSelector } from "../../../common/hooks";
+import { deleteEmployee, getEmployees } from "../../../services/employees";
+import { Employee } from "../../../common/types";
 
-export const EmployeesContext = createContext();
+export const EmployeesContext = createContext<Employee[]>([]);
 
 function EmployeeList() {
-  const dispatch = useDispatch();
-  const { loading, data, error, hasError } = useSelector(
+  const dispatch = useAppDispatch();
+
+  // Get the employees list
+  const { loading, data, error, hasError } = useAppSelector(
     (state) => state.employees.list
   );
-  const deleteData = useSelector((state) => state.employees.employee);
+
+  // Get currently selected employee
+  const deleteData = useAppSelector((state) => state.employees.employee);
   const [isTableView, setIsTableView] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
 
+  // Get all employee data on mount
   useEffect(() => {
     handleGetAllEmployees();
   }, []);
@@ -33,11 +39,12 @@ function EmployeeList() {
     setIsModalOpen(false);
   };
 
-  const openModal = (user) => {
+  const openModal = (id: string) => {
     setIsModalOpen(true);
-    setSelectedUser(user);
+    setSelectedUser(id);
   };
 
+  // Delete the selected user
   const handleDelete = () => {
     dispatch(
       deleteEmployee({
@@ -51,7 +58,8 @@ function EmployeeList() {
     dispatch(getEmployees());
   };
 
-  const getUsername = (id) => {
+  // Format the username to display on the delete modal
+  const getUsername = (id: string) => {
     const userIdx = data.findIndex((user) => user._id === id);
     if (userIdx > -1) {
       return `${data[userIdx]?.first_name} ${data[userIdx]?.last_name}`;

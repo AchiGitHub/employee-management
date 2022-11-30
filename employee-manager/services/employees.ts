@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASE_URL } from "../utils/constants";
+import { Employee } from "../common/types";
+import { BASE_URL } from "../common/utils/constants";
 
-export const getEmployees = createAsyncThunk(
+export const getEmployees = createAsyncThunk<Employee[]>(
   "employee/list",
   async (payload, { rejectWithValue }) => {
     try {
@@ -14,7 +15,7 @@ export const getEmployees = createAsyncThunk(
   }
 );
 
-export const addEmployee = createAsyncThunk(
+export const addEmployee = createAsyncThunk<Employee, { data: Employee, callBack: () => void }>(
   "employee/add",
   async (payload, { rejectWithValue }) => {
     try {
@@ -35,7 +36,7 @@ export const addEmployee = createAsyncThunk(
   }
 );
 
-export const editEmployee = createAsyncThunk(
+export const editEmployee = createAsyncThunk<{ id: string, data: Employee }, { id: string, data: Employee, callback: () => void }>(
   "employee/edit",
   async (payload, { rejectWithValue }) => {
     try {
@@ -56,7 +57,7 @@ export const editEmployee = createAsyncThunk(
   }
 );
 
-export const deleteEmployee = createAsyncThunk(
+export const deleteEmployee = createAsyncThunk<string, { userId: string, callback: () => void }>(
   "employee/delete",
   async (payload, { rejectWithValue }) => {
     try {
@@ -68,17 +69,17 @@ export const deleteEmployee = createAsyncThunk(
       callback();
       return result._id;
     } catch (error) {
-      console.log("🚀 ~ file: Employees.js ~ line 71 ~ error", error)
       return rejectWithValue(error);
     }
   }
 );
 
-export const getEmployee = createAsyncThunk(
+export const getEmployee = createAsyncThunk<Employee, { id: string | string[] }>(
   "employee/single",
   async (payload, { rejectWithValue }) => {
+    const { id } = payload;
     try {
-      const response = await fetch(`${BASE_URL}/employee/${payload}`);
+      const response = await fetch(`${BASE_URL}/employee/${id}`);
       const result = await response.json();
       return result;
     } catch (error) {

@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-export default function Home({ employees }) {
+export default function Home() {
 
   const route = useRouter();
 
+  // Redirect to the main employee listing page
   useEffect(() => {
     route.push('/employee/list')
-  }, [])
+  }, []);
   
 
   return (

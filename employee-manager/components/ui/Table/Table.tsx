@@ -6,12 +6,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { EmployeesContext } from "../../../pages/employee/list";
-import { GenderMap } from "../../../utils/constants";
 import { Avatar } from "@mui/material";
+import { EmployeesContext } from "../../../pages/employee/list";
+import { GenderMap } from "../../../common/utils/constants";
 import Operations from "../../common/Operations/Operations";
 
-export default function EmployeeTable({ handleDelete }) {
+interface EmployeeTableProps {
+  handleDelete: (id: string) => void;
+}
+
+const EmployeeTable = ({ handleDelete }: EmployeeTableProps) => {
   const employeeData = useContext(EmployeesContext);
 
   return (
@@ -56,4 +60,6 @@ export default function EmployeeTable({ handleDelete }) {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default EmployeeTable;

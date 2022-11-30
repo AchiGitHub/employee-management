@@ -7,9 +7,28 @@ import {
   Typography,
 } from "@mui/material";
 import { IoCloseSharp } from "react-icons/io5";
+import { modalStyle } from "../../../common/utils/constants";
 import styles from "./Modal.module.css";
 
-function ModalComponent({ title, open, handleClose, handleDelete, loading }) {
+interface ModalProps {
+  title: string;
+  open: boolean;
+  loading: boolean;
+  handleClose: () => void;
+  handleDelete: () => void;
+}
+
+function ModalComponent({
+  title,
+  open,
+  loading,
+  handleClose,
+  handleDelete,
+}: ModalProps) {
+
+  const closeModal = () => handleClose();
+  const deleteUser = () => handleDelete();
+  
   return (
     <Modal
       open={open}
@@ -17,9 +36,9 @@ function ModalComponent({ title, open, handleClose, handleDelete, loading }) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={modalStyle}>
         <div className={styles.top}>
-          <IconButton onClick={() => handleClose()}>
+          <IconButton onClick={closeModal}>
             <IoCloseSharp size="20px" />
           </IconButton>
         </div>
@@ -34,7 +53,7 @@ function ModalComponent({ title, open, handleClose, handleDelete, loading }) {
               id="modal-modal-description"
               sx={{ mt: 2, fontSize: 14 }}
             >
-              Are you sure you want to delete {`"${title}"`}?
+              Are you sure you want to delete {`${title}`}?
             </Typography>
           </div>
           {loading ? (
@@ -43,13 +62,13 @@ function ModalComponent({ title, open, handleClose, handleDelete, loading }) {
             </IconButton>
           ) : (
             <div className={styles.footer}>
-              <Button variant="contained" onClick={() => handleClose()}>
+              <Button variant="contained" onClick={closeModal}>
                 Cancel
               </Button>
               <Button
                 variant="contained"
                 color="error"
-                onClick={() => handleDelete()}
+                onClick={deleteUser}
               >
                 Delete User
               </Button>
@@ -60,19 +79,5 @@ function ModalComponent({ title, open, handleClose, handleDelete, loading }) {
     </Modal>
   );
 }
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #efefef",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-  margin: "0 auto",
-};
 
 export default ModalComponent;
