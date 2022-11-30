@@ -18,14 +18,17 @@ function EditEmployee() {
     (state) => state.employees.selectedEmployee
   );
 
+  // Get the update employee state from redux
   const updateEmployee = useAppSelector((state) => state.employees.employee);
 
   useEffect(() => {
     if (id) {
+      // fetch the specific employee data
       dispatch(getEmployee({ id }));
     }
   }, [id]);
 
+  // Update the selected employee data
   const handleSubmit = (data: Employee) => {
     const { _id, first_name, last_name, email, number, gender, photo } = data;
     dispatch(
@@ -44,6 +47,7 @@ function EditEmployee() {
     );
   };
 
+  // Change the route of the user based on the passed path
   const redirectRotue = (route: string) => {
     router.push(route);
   };

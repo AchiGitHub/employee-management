@@ -39,6 +39,7 @@ function EmployeeList() {
     setIsModalOpen(false);
   };
 
+  // Set the selected user id when modal is opened
   const openModal = (id: string) => {
     setIsModalOpen(true);
     setSelectedUser(id);
@@ -67,6 +68,7 @@ function EmployeeList() {
     return "";
   };
 
+  // Render error message if the server API fails
   if (hasError) {
     return (
       <div className={styles.notfound}>

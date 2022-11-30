@@ -16,6 +16,7 @@ interface EmployeeTableProps {
 }
 
 const EmployeeTable = ({ handleDelete }: EmployeeTableProps) => {
+
   const employeeData = useContext(EmployeesContext);
 
   return (

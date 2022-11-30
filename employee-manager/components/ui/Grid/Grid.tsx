@@ -9,6 +9,7 @@ function Grid({ handleDelete }) {
 
   const employeeData = useContext(EmployeesContext);
 
+  // Render empty message if no employeess available
   if (employeeData.length === 0) {
     return <h2>No records!</h2>;
   }

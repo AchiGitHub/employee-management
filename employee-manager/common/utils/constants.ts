@@ -7,6 +7,7 @@ export const GenderMap = {
 
 export const PHONE_REGEX = /^((94)(\d{9})|(081)(\d{9})|(0)(\d{9})|(\+?94)(\d{9}))$/;
 
+// Formik initial values
 export const initialValues = {
     first_name: "",
     last_name: "",
