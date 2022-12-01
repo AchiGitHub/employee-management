@@ -134,6 +134,7 @@ const Form = ({
               error={formik.touched.gender && Boolean(formik.errors.gender)}
               helperText={formik.touched.gender && formik.errors.gender}
               disabled={disabled}
+              data-testid="gender-dropdown"
             >
               <MenuItem value="M">Male</MenuItem>
               <MenuItem value="F">Female</MenuItem>
