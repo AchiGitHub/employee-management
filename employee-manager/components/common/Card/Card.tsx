@@ -24,7 +24,7 @@ function CardComponent({
         component="img"
         height="120"
         image={photo}
-        alt="green iguana"
+        alt="employee avatar"
       />
       <CardContent className={styles.card}>
         <h4>{`${firstName} ${lastName}`}</h4>
