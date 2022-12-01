@@ -10,7 +10,7 @@ describe("<Form/>", () => {
   const handleSubmit = jest.fn();
   const redirect = jest.fn();
 
-  it("should render the form and submit", async () => {
+  beforeEach(() => {
     render(
       <Form
         initialValues={initialValues}
@@ -20,6 +20,9 @@ describe("<Form/>", () => {
         redirect={redirect}
       />
     );
+  });
+
+  it("should render the form and submit", async () => {
     const user = userEvent.setup();
     await user.type(
       screen.getByRole("textbox", {
@@ -67,15 +70,6 @@ describe("<Form/>", () => {
   });
 
   it("should display validation message on required fields", async () => {
-    render(
-      <Form
-        initialValues={initialValues}
-        submitButtonText="SUBMIT"
-        disabled={false}
-        handleSubmit={handleSubmit}
-        redirect={redirect}
-      />
-    );
     clickSubmitButton();
     await waitFor(() => {
       expect(screen.getByText(/first name is required/i)).toBeInTheDocument();
@@ -85,15 +79,6 @@ describe("<Form/>", () => {
   });
 
   it("should display error message on invalid number", async () => {
-    render(
-      <Form
-        initialValues={initialValues}
-        submitButtonText="SUBMIT"
-        disabled={false}
-        handleSubmit={handleSubmit}
-        redirect={redirect}
-      />
-    );
     const user = userEvent.setup();
     await user.type(
       screen.getByRole("textbox", {
