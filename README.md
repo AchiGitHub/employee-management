@@ -18,3 +18,8 @@ MondoDB starts on port `http://localhost:27017`
 API Documentation: http://localhost:4200/api
 
 Run `docker-compose down` at the end
+
+### Run Tests
+
+Run `yarn test` on employee-manager directory
+Run `yarn test` on employee-service directory
