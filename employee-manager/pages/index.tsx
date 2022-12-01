@@ -5,7 +5,7 @@ export default function Home() {
 
   const route = useRouter();
 
-  // Redirect to the main employee listing page
+  // Redirect to the main employee listing page on load
   useEffect(() => {
     route.push('/employee/list')
   }, []);
